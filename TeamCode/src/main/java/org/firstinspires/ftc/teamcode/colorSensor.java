@@ -26,13 +26,17 @@ public class colorSensor extends LinearOpMode
             int green = colorSensor.green();
             int blue = colorSensor.blue();
 
+            // add some threshhold to get an accurate color reading
+            boolean isGreen = (green > red * 1.3 && green > blue * 1.3 && green > 100);
+            boolean isPurple = (blue > green && blue > red && red > 80);
+
             String detectedColor = "Unknown";
 
-            if (green > red && green > blue)
+            if (isGreen)
             {
                 detectedColor = "Green";
             }
-            else if (blue > green && red > green)
+            else if (isPurple)
             {
                 detectedColor = "Purple";
             }
@@ -41,7 +45,8 @@ public class colorSensor extends LinearOpMode
             telemetry.addData("Red", red);
             telemetry.addData("Green", green);
             telemetry.addData("Blue", blue);
-            telemetry.addData("Distance (cm)", "%.2f", colorSensor.getDistance(org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.CM));
+            telemetry.addData("Distance (cm)", "%.2f",
+                    colorSensor.getDistance(org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.CM));
             telemetry.update();
         }
     }
