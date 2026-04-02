@@ -17,8 +17,11 @@ public class colorSensor extends LinearOpMode
         colorSensor = hardwareMap.get(RevColorSensorV3.class, "colorSensor");
         motor = hardwareMap.get(DcMotor.class, "motor");
 
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor.setPower(0.6);
+
         telemetry.addLine("Ready");
-        telemetry.addLine("Point sensor close to purple or green object");
         telemetry.update();
 
         waitForStart();
@@ -29,7 +32,6 @@ public class colorSensor extends LinearOpMode
             int green = colorSensor.green();
             int blue = colorSensor.blue();
 
-            // add some threshhold to get an accurate color reading
             boolean isGreen = (green > red * 1.3 && green > blue * 1.3 && green > 100);
             boolean isPurple = (blue > green && blue > red && red > 80);
 
@@ -39,17 +41,25 @@ public class colorSensor extends LinearOpMode
             {
                 detectedColor = "Green";
                 motor.setTargetPosition(560);
+                motor.setPower(0.6);
             }
             else if (isPurple)
             {
                 detectedColor = "Purple";
                 motor.setTargetPosition(-560);
+                motor.setPower(0.6);
+            }
+            else
+            {
+                motor.setPower(0);
             }
 
             telemetry.addData("Detected", detectedColor);
             telemetry.addData("Red", red);
             telemetry.addData("Green", green);
             telemetry.addData("Blue", blue);
+            telemetry.addData("Target", motor.getTargetPosition());
+            telemetry.addData("Current", motor.getCurrentPosition());
             telemetry.addData("Distance (cm)", "%.2f",
                     colorSensor.getDistance(org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.CM));
             telemetry.update();
