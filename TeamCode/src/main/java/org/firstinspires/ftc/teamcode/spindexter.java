@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "Purple Green Sensor Test", group = "Sensor")
-public class colorSensor extends LinearOpMode
+public class spindexter extends LinearOpMode
 {
     private RevColorSensorV3 colorSensor;
     private DcMotor motor;
@@ -14,7 +14,7 @@ public class colorSensor extends LinearOpMode
     @Override
     public void runOpMode()
     {
-        colorSensor = hardwareMap.get(RevColorSensorV3.class, "colorSensor");
+        colorSensor = hardwareMap.get(RevColorSensorV3.class, "spindexter");
         motor = hardwareMap.get(DcMotor.class, "motor");
 
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
