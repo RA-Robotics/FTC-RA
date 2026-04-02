@@ -3,16 +3,19 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "Purple Green Sensor Test", group = "Sensor")
 public class colorSensor extends LinearOpMode
 {
     private RevColorSensorV3 colorSensor;
+    private DcMotor motor;
 
     @Override
     public void runOpMode()
     {
         colorSensor = hardwareMap.get(RevColorSensorV3.class, "colorSensor");
+        motor = hardwareMap.get(DcMotor.class, "motor");
 
         telemetry.addLine("Ready");
         telemetry.addLine("Point sensor close to purple or green object");
@@ -35,10 +38,12 @@ public class colorSensor extends LinearOpMode
             if (isGreen)
             {
                 detectedColor = "Green";
+                motor.setTargetPosition(560);
             }
             else if (isPurple)
             {
                 detectedColor = "Purple";
+                motor.setTargetPosition(-560);
             }
 
             telemetry.addData("Detected", detectedColor);
