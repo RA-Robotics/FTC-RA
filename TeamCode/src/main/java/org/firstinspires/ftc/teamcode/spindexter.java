@@ -19,7 +19,7 @@ public class spindexter extends LinearOpMode
 
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motor.setPower(0.6);
+        motor.setPower(1);
 
         telemetry.addLine("Ready");
         telemetry.update();
@@ -41,13 +41,13 @@ public class spindexter extends LinearOpMode
             {
                 detectedColor = "Green";
                 motor.setTargetPosition(560);
-                motor.setPower(0.6);
+                motor.setPower(1);
             }
             else if (isPurple)
             {
                 detectedColor = "Purple";
                 motor.setTargetPosition(-560);
-                motor.setPower(0.6);
+                motor.setPower(1);
             }
             else
             {
