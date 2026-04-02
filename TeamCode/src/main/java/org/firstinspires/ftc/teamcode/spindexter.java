@@ -14,10 +14,11 @@ public class spindexter extends LinearOpMode
     @Override
     public void runOpMode()
     {
-        colorSensor = hardwareMap.get(RevColorSensorV3.class, "spindexter");
+        colorSensor = hardwareMap.get(RevColorSensorV3.class, "colorSensor");
         motor = hardwareMap.get(DcMotor.class, "motor");
 
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setTargetPosition(0);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor.setPower(1);
 
