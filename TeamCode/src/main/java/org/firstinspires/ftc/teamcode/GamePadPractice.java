@@ -1,48 +1,43 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Disabled
-@TeleOp
-public class GamePadPractice extends OpMode {
+@TeleOp(name = "Joystick + Button Motor Control", group = "Practice")
+public class GamePadPractice extends OpMode
+{
+    private DcMotor motor;
 
     @Override
-    public void init() {
-
+    public void init()
+    {
+        motor = hardwareMap.get(DcMotor.class, "motor");
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
     }
 
     @Override
-    public void loop() {
-        // runs 50x* a second
-        double speedForwardLeft = -gamepad1.left_stick_y;
-        double speedForwardRight = -gamepad1.right_stick_y;
-        double diffXJoysticks = gamepad1.left_stick_x - gamepad1.right_stick_x;
-        double sumTriggers = gamepad1.left_trigger + gamepad1.right_trigger;
+    public void loop()
+    {
+        double power;
 
+        if (gamepad1.left_stick_y != 0 )
+        {
+            power = -gamepad1.left_stick_y;
+        }
+        else if (gamepad1.a)
+        {
+            power = 1.0;
+        }
+        else
+        {
+            power = 0.0;
+        }
 
-        telemetry.addData("left x", gamepad1.left_stick_x);
-        telemetry.addData("left y", speedForwardLeft);
-        telemetry.addData("right x", gamepad1.right_stick_x);
-        telemetry.addData("right y", speedForwardRight);
-        telemetry.addData("difference x", diffXJoysticks);
+        motor.setPower(power);
 
-        telemetry.addData("a button", gamepad1.a);
-        telemetry.addData("b button", gamepad1.b);
-
-        telemetry.addData("left trigger", gamepad1.left_trigger);
-        telemetry.addData("right trigger", gamepad1.right_trigger);
-        telemetry.addData("sum triggers", sumTriggers);
-
-
-
-
+        telemetry.addData("Power", power);
+        telemetry.update();
     }
-    /*
-    1. add telemetry for the right joystick
-    2. add telemetry for the b button
-    3. add telemetry data for the difference between left and right x joystick values.
-    4. add telemetry data to report the sum of both rear triggers.
-     */
 }
