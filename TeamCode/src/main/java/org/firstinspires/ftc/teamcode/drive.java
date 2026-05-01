@@ -11,6 +11,8 @@ public class drive  extends LinearOpMode {
     private DcMotor rightDriveMotor;
 
     @Override
+
+    // runs when the driver clicks init(basically gets all the morors and equipment ready)
     public void runOpMode() {
 
         // Initialize motors
@@ -30,6 +32,7 @@ public class drive  extends LinearOpMode {
 
         waitForStart();
 
+        // Runs When the driver clicks start
         while (opModeIsActive()) {
 
             // Tank drive controls
