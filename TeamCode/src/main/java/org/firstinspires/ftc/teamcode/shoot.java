@@ -8,43 +8,49 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class shoot extends LinearOpMode {
 
     private DcMotor shooter;
+    private double power = 0.0;
+
+    private boolean prevRightTrigger = false;
+    private boolean prevLeftTrigger = false;
 
     @Override
     public void runOpMode() {
 
         shooter = hardwareMap.get(DcMotor.class, "shooterMotor");
 
-        shooter.setDirection(DcMotor.Direction.REVERSE);
-        shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        double shooterPower = 0.0;
-        double step = 0.02;
-
         waitForStart();
 
         while (opModeIsActive()) {
 
-            // Increase power
-            if (gamepad1.right_trigger > 0) {
-                shooterPower += step * gamepad1.right_trigger;
+            boolean currentRightTrigger = gamepad1.right_trigger > 0.1;
+            boolean currentLeftTrigger = gamepad1.left_trigger > 0.1;
+
+            // if right trigger pressed power increases by 1/10
+            if (currentRightTrigger && !prevRightTrigger) {
+                power += 0.1;
             }
 
-            // Decrease power
-            if (gamepad1.left_trigger > 0) {
-                shooterPower -= step * gamepad1.left_trigger;
+            // if the left trigger was pressed power goes down by 1/10
+            if (currentLeftTrigger && !prevLeftTrigger) {
+                power -= 0.1;
             }
 
-            // Clamp 0–1
-            shooterPower = Math.max(0.0, Math.min(1.0, shooterPower));
+            // turns off shooter
+            if (gamepad1.right_bumper) {
+                power = 0.0;
+            }
+            
+            // clamp power between 0-1
+            if (power > 1.0) power = 1.0;
+            if (power < 0.0) power = 0.0;
 
-            shooter.setPower(shooterPower);
+            shooter.setPower(power);
 
-            telemetry.addData("Right Trigger", gamepad1.right_trigger);
-            telemetry.addData("Left Trigger", gamepad1.left_trigger);
-            telemetry.addData("Shooter Power", shooterPower);
+            prevRightTrigger = currentRightTrigger;
+            prevLeftTrigger = currentLeftTrigger;
+
+            telemetry.addData("Shooter Power", power);
             telemetry.update();
-
-            idle();
         }
     }
 }
