@@ -16,8 +16,8 @@ public class drive  extends LinearOpMode {
     public void runOpMode() {
 
         // Initialize motors
-        leftDriveMotor = hardwareMap.get(DcMotor.class, "leftMotor");
-        rightDriveMotor = hardwareMap.get(DcMotor.class, "rightMotor");
+        leftDriveMotor = hardwareMap.get(DcMotor.class, "leftDriveMotor");
+        rightDriveMotor = hardwareMap.get(DcMotor.class, "rightDriveMotor");
 
         // Reverse one side so both wheels move forward together
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
