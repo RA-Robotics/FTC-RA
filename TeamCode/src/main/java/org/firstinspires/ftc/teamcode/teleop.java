@@ -24,8 +24,8 @@ public class teleop extends LinearOpMode {
         leftDriveMotor = hardwareMap.get(DcMotor.class, "leftDriveMotor");
         rightDriveMotor = hardwareMap.get(DcMotor.class, "rightDriveMotor");
 
-        shooter = hardwareMap.get(DcMotor.class, "shooterMotor");
-        buffer = hardwareMap.get(DcMotor.class, "bufferMotor");
+        shooter = hardwareMap.get(DcMotor.class, "shootMotor");
+        buffer = hardwareMap.get(DcMotor.class, "intakeMotor");
 
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
         rightDriveMotor.setDirection(DcMotor.Direction.FORWARD);
